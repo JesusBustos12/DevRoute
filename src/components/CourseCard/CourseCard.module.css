@@ -1,0 +1,117 @@
+.card {
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+  transition: var(--transition-all);
+  overflow: hidden; /* To clamp local-top corners of image */
+  display: flex;
+  flex-direction: column;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+}
+
+.imageContainer {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: var(--color-bg-tertiary);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card:hover .image {
+  transform: scale(1.05);
+}
+
+.cardContent {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.cardIndex {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: var(--color-bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  transition: var(--transition-colors);
+}
+
+.card:hover .cardIndex {
+  background-color: var(--color-rose-100);
+  color: var(--color-rose-600);
+}
+
+[data-theme="dark"] .card:hover .cardIndex {
+  background-color: var(--color-rose-900-30);
+  color: var(--color-rose-300);
+}
+
+.ratingBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: var(--color-amber-100);
+  color: var(--color-amber-700);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-md);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+[data-theme="dark"] .ratingBadge {
+  background-color: var(--color-amber-900-30);
+  color: var(--color-amber-400);
+}
+
+.ratingIcon {
+  fill: currentColor;
+}
+
+.cardTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s;
+}
+
+.card:hover .cardTitle {
+  color: var(--color-teal-600);
+}
+
+[data-theme="dark"] .card:hover .cardTitle {
+  color: var(--color-teal-400);
+}
+
+.cardDesc {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}

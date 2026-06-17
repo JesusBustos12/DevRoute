@@ -1,0 +1,31 @@
+.page {
+  min-height: 100vh;
+  transition: var(--transition-colors);
+}
+
+.main {
+  width: 100%;
+  background-color: #f2f7c140;
+}
+
+[data-theme="dark"] .main {
+  background-color: transparent;
+}
+
+.mainInner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .mainInner {
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mainInner {
+    padding: 3rem 2rem;
+  }
+}

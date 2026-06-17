@@ -1,0 +1,134 @@
+.hero {
+  text-align: center;
+  max-width: 48rem;
+  margin: 0 auto 4rem;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 3rem;
+  }
+}
+
+.highlightRose {
+  color: var(--color-rose-600);
+}
+
+[data-theme="dark"] .highlightRose {
+  color: var(--color-rose-500);
+}
+
+.highlightTeal {
+  color: var(--color-teal-600);
+}
+
+[data-theme="dark"] .highlightTeal {
+  color: var(--color-teal-400);
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.75;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.badge {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.active {
+  transform: scale(1.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.badgeRose {
+  background-color: var(--color-rose-100);
+  color: var(--color-rose-700);
+}
+
+[data-theme="dark"] .badgeRose {
+  background-color: var(--color-rose-900-30);
+  color: var(--color-rose-300);
+}
+
+.badgeTeal {
+  background-color: var(--color-teal-100);
+  color: var(--color-teal-700);
+}
+
+[data-theme="dark"] .badgeTeal {
+  background-color: rgba(19, 78, 74, 0.3);
+  color: var(--color-teal-400);
+}
+
+.badgeIndigo {
+  background-color: var(--color-indigo-100);
+  color: var(--color-indigo-700);
+}
+
+[data-theme="dark"] .badgeIndigo {
+  background-color: var(--color-indigo-900-30);
+  color: var(--color-indigo-400);
+}
+
+.badgeAmber {
+  background-color: var(--color-amber-100);
+  color: var(--color-amber-700);
+}
+
+[data-theme="dark"] .badgeAmber {
+  background-color: var(--color-amber-900-30);
+  color: var(--color-amber-400);
+}
+
+/* Badge Default (Todos) */
+.badgeDefault {
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-700);
+}
+
+[data-theme="dark"] .badgeDefault {
+  background-color: var(--color-gray-800);
+  color: var(--color-gray-300);
+}
+
+/* Specific Active States with Outline */
+.badgeRose.active { border-color: var(--color-rose-400); }
+.badgeTeal.active { border-color: var(--color-teal-400); }
+.badgeIndigo.active { border-color: var(--color-indigo-400); }
+.badgeAmber.active { border-color: var(--color-amber-400); }
+.badgeDefault.active { border-color: var(--color-gray-400); }

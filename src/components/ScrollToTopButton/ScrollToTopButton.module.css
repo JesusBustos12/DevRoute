@@ -1,0 +1,50 @@
+.scrollToTop {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--color-text);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeIn 0.3s ease-out;
+}
+
+[data-theme="dark"] .scrollToTop {
+  background-color: rgba(15, 23, 42, 0.5);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.scrollToTop:hover {
+  transform: translateY(-5px);
+  background-color: var(--color-teal-600);
+  color: white;
+  border-color: var(--color-teal-400);
+  box-shadow: 0 0 20px rgba(20, 184, 166, 0.4);
+}
+
+[data-theme="dark"] .scrollToTop:hover {
+  background-color: var(--color-teal-500);
+  box-shadow: 0 0 25px rgba(20, 184, 166, 0.3);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

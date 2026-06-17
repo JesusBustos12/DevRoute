@@ -1,0 +1,40 @@
+.toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 4rem;
+  height: 2rem;
+  border-radius: var(--radius-full);
+  padding: 0.25rem;
+  transition: background-color 0.3s;
+  background-color: var(--color-rose-300);
+}
+
+[data-theme="dark"] .toggle {
+  background-color: var(--color-teal-600);
+}
+
+.knob {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: translateX(0);
+}
+
+[data-theme="dark"] .knob {
+  transform: translateX(2rem);
+}
+
+.iconSun {
+  color: var(--color-rose-500);
+}
+
+.iconMoon {
+  color: var(--color-teal-600);
+}
