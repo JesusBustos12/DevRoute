@@ -13,9 +13,7 @@ export default function Header({ searchQuery, onSearchChange }: HeaderProps) {
     <header className={styles.header}>
       <div className={styles.headerInner}>
         <div className={styles.logoGroup}>
-          <div className={styles.logoIcon}>
-            <Image src="/estudiar.png" alt="DevRoute Logo" width={28} height={28} />
-          </div>
+          <Image src="/estudiar.png" alt="DevRoute Logo" width={50} height={50} />
           <h1 className={styles.logoText}>DevRoute</h1>
         </div>
         
