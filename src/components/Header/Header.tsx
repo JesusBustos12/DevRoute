@@ -1,4 +1,5 @@
-import { Code2, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
+import Image from 'next/image';
 import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
 import styles from './Header.module.css';
 
@@ -13,7 +14,7 @@ export default function Header({ searchQuery, onSearchChange }: HeaderProps) {
       <div className={styles.headerInner}>
         <div className={styles.logoGroup}>
           <div className={styles.logoIcon}>
-            <Code2 size={24} />
+            <Image src="/estudiar.png" alt="DevRoute Logo" width={28} height={28} />
           </div>
           <h1 className={styles.logoText}>DevRoute</h1>
         </div>
