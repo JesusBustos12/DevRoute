@@ -31,7 +31,9 @@
 }
 
 .logoImage {
-  border-radius: 28%;
+  border-radius: 28% !important;
+  overflow: hidden;
+  object-fit: cover;
 }
 
 .logoText {
