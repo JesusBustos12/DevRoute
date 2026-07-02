@@ -162,6 +162,11 @@
   box-shadow: var(--shadow-sm);
 }
 
+.messageBubble ul,
+.messageBubble ol {
+  padding-left: 1rem;
+}
+
 /* ===== Loading dots ===== */
 .loadingDots {
   display: flex;
