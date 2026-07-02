@@ -2,24 +2,45 @@ import { NextResponse } from 'next/server';
 import { openai } from '@ai-sdk/openai';
 import { streamText } from 'ai';
 import { courses, FAQ_CONTEXT } from '@/data/courses';
-import { rateLimit } from '@/utils/rateLimit';
+import { prisma } from '@/lib/prisma';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-const limiter = rateLimit({
-  interval: 60 * 1000, // 60 seconds
-  uniqueTokenPerInterval: 500, // Max 500 users per minute
-});
-
 export async function POST(req: Request) {
   try {
     const ip = req.headers.get('x-forwarded-for') ?? 'anonymous';
-    try {
-      // Limit to 10 requests per minute per IP
-      await limiter.check(10, ip);
-    } catch {
-      return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
+    const MAX_REQUESTS = 20;
+
+    // Lógica de Rate Limiting en Prisma (24h reset)
+    let rateLimit = await prisma.userRateLimit.findUnique({ where: { ip } });
+    
+    if (rateLimit) {
+      const now = new Date();
+      const lastUpdate = new Date(rateLimit.updatedAt);
+      const hoursDiff = (now.getTime() - lastUpdate.getTime()) / (1000 * 60 * 60);
+
+      if (hoursDiff >= 24) {
+        // Reset after 24 hours
+        rateLimit = await prisma.userRateLimit.update({
+          where: { ip },
+          data: { requestCount: 1, updatedAt: new Date() }
+        });
+      } else {
+        if (rateLimit.requestCount >= MAX_REQUESTS) {
+          return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
+        }
+        // Increment count
+        rateLimit = await prisma.userRateLimit.update({
+          where: { ip },
+          data: { requestCount: { increment: 1 }, updatedAt: new Date() }
+        });
+      }
+    } else {
+      // Create new record
+      rateLimit = await prisma.userRateLimit.create({
+        data: { ip, requestCount: 1 }
+      });
     }
 
     const { messages } = await req.json();

@@ -75,6 +75,27 @@
   font-size: 0.95rem;
 }
 
+.limitBadge {
+  font-size: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+  margin-left: 0.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.limitBadgeWarning {
+  background-color: var(--color-rose-500);
+  color: white;
+  animation: pulseGlow 2s infinite;
+}
+
+.limitBadgeEmpty {
+  background-color: var(--color-rose-700);
+  color: white;
+}
+
 .closeButton {
   padding: 0.25rem;
   border-radius: 50%;

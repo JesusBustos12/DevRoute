@@ -64,3 +64,11 @@ enum MessageRole {
   assistant
   system
 }
+
+model UserRateLimit {
+  ip           String   @id @db.VarChar(45)
+  requestCount Int      @default(0)
+  updatedAt    DateTime @updatedAt
+
+  @@map("user_rate_limits")
+}

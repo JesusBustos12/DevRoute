@@ -10,7 +10,20 @@ import styles from './Chatbot.module.css';
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [remainingRequests, setRemainingRequests] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  const fetchRemainingLimit = useCallback(async () => {
+    try {
+      const res = await fetch('/api/chat/limit');
+      if (res.ok) {
+        const data = await res.json();
+        setRemainingRequests(data.remaining);
+      }
+    } catch (e) {
+      console.error('Error fetching limit', e);
+    }
+  }, []);
   
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
     api: '/api/chat',
@@ -21,7 +34,21 @@ export default function Chatbot() {
         content: '¡Hola! Soy el Asistente Dev. Estoy aquí para ayudarte con cualquier duda sobre programación, desarrollo web y los cursos de la ruta de aprendizaje. ¿En qué te puedo ayudar hoy?',
       },
     ],
+    onFinish: () => {
+      fetchRemainingLimit();
+    },
+    onError: (err) => {
+      if (err.message.includes('429')) {
+        setRemainingRequests(0);
+      }
+    }
   });
+
+  useEffect(() => {
+    if (isOpen && remainingRequests === null) {
+      fetchRemainingLimit();
+    }
+  }, [isOpen, remainingRequests, fetchRemainingLimit]);
 
   const handleClose = useCallback(() => {
     setIsClosing(true);
@@ -58,6 +85,11 @@ export default function Chatbot() {
               <div className={styles.chatHeaderLeft}>
                 <Bot size={20} />
                 <h3 className={styles.chatHeaderTitle}>Asistente Dev</h3>
+                {remainingRequests !== null && (
+                  <span className={`${styles.limitBadge} ${remainingRequests <= 5 ? (remainingRequests === 0 ? styles.limitBadgeEmpty : styles.limitBadgeWarning) : ''}`}>
+                    {remainingRequests}/20
+                  </span>
+                )}
               </div>
               <button onClick={handleClose} className={styles.closeButton}>
                 <X size={20} />
@@ -113,12 +145,13 @@ export default function Chatbot() {
                 type="text"
                 value={input}
                 onChange={handleInputChange}
-                placeholder="Escribe tu pregunta..."
+                placeholder={remainingRequests === 0 ? "Límite de peticiones alcanzado" : "Escribe tu pregunta..."}
                 className={styles.textInput}
+                disabled={remainingRequests === 0}
               />
               <button
                 type="submit"
-                disabled={isLoading || !input.trim()}
+                disabled={isLoading || !input.trim() || remainingRequests === 0}
                 className={styles.sendButton}
               >
                 <Send size={16} />
