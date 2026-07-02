@@ -19,9 +19,12 @@ export default function Chatbot() {
       if (res.ok) {
         const data = await res.json();
         setRemainingRequests(data.remaining);
+      } else {
+        setRemainingRequests(20);
       }
     } catch (e) {
       console.error('Error fetching limit', e);
+      setRemainingRequests(20); // Fallback en caso de error
     }
   }, []);
   
