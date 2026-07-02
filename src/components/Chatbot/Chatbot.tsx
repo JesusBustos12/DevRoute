@@ -11,6 +11,7 @@ export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [remainingRequests, setRemainingRequests] = useState<number | null>(null);
+  const [sessionId, setSessionId] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
   const fetchRemainingLimit = useCallback(async () => {
@@ -27,9 +28,21 @@ export default function Chatbot() {
       setRemainingRequests(20); // Fallback en caso de error
     }
   }, []);
+
+  useEffect(() => {
+    let savedSessionId = localStorage.getItem('devroute_chat_session');
+    if (!savedSessionId) {
+      savedSessionId = crypto.randomUUID();
+      localStorage.setItem('devroute_chat_session', savedSessionId);
+    }
+    setSessionId(savedSessionId);
+  }, []);
   
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
     api: '/api/chat',
+    body: {
+      sessionId: sessionId,
+    },
     initialMessages: [
       {
         id: 'welcome-message',

@@ -43,10 +43,38 @@ export async function POST(req: Request) {
       });
     }
 
-    const { messages } = await req.json();
+    const { messages, sessionId } = await req.json();
+
+    if (sessionId) {
+      const session = await prisma.chatSession.findUnique({ where: { id: sessionId } });
+      if (!session) {
+        await prisma.chatSession.create({
+          data: { id: sessionId, user_identifier: ip }
+        });
+      }
+
+      const lastUserMessage = messages[messages.length - 1];
+      if (lastUserMessage && lastUserMessage.role === 'user') {
+        await prisma.message.create({
+          data: {
+            session_id: sessionId,
+            role: 'user',
+            content: lastUserMessage.content
+          }
+        });
+      }
+    }
 
     // Only keep the last 10 messages to save context limit and tokens
     const trimmedMessages = messages.slice(-10);
+
+    const dbCourses = await prisma.course.findMany({
+      select: { title: true, rating: true, description: true }
+    });
+    
+    const coursesListText = dbCourses.length > 0 
+      ? dbCourses.map((c, i) => `${i + 1}. ${c.title} (${c.rating} estrellas) - ${c.description}`).join('\n')
+      : courses.map((c, i) => `${i + 1}. ${c.title} (${c.rating} estrellas) - ${c.desc}`).join('\n');
 
     const systemInstruction = `Eres un asistente virtual experto en programación y en la ruta de aprendizaje de desarrollo web de Víctor Robles. 
 Tu objetivo es responder ÚNICAMENTE a preguntas relacionadas con el mundo de la programación, desarrollo web, inteligencia artificial, bases de datos, ciberseguridad, automatizaciones y sobre los cursos mencionados en la ruta de aprendizaje.
@@ -56,7 +84,7 @@ Contexto de los cursos y la ruta de aprendizaje:
 ${FAQ_CONTEXT}
 
 Lista de cursos:
-${courses.map((c, i) => `${i + 1}. ${c.title} (${c.rating} estrellas) - ${c.desc}`).join('\n')}
+${coursesListText}
 `;
 
     const result = streamText({
@@ -64,6 +92,21 @@ ${courses.map((c, i) => `${i + 1}. ${c.title} (${c.rating} estrellas) - ${c.desc
       system: systemInstruction,
       messages: trimmedMessages,
       temperature: 0.7,
+      onFinish: async ({ text }) => {
+        if (sessionId) {
+          try {
+            await prisma.message.create({
+              data: {
+                session_id: sessionId,
+                role: 'assistant',
+                content: text
+              }
+            });
+          } catch (e) {
+            console.error('Error saving assistant message:', e);
+          }
+        }
+      }
     });
 
     return result.toDataStreamResponse();
