@@ -27,10 +27,11 @@
 .logoGroup {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.8rem;
 }
 
 .logoImage {
+  background-color: #ff244f; /* Rellena las esquinas transparentes del PNG. Ajusta este color si el rojo no es idéntico */
   border-radius: 28% !important;
   overflow: hidden;
   object-fit: cover;
