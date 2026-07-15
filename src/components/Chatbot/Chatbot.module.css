@@ -1,10 +1,10 @@
 /* ===== Floating trigger button ===== */
 .trigger {
   position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  width: 3.5rem;
-  height: 3.5rem;
+  bottom: 1rem;
+  right: 1rem;
+  width: 3rem;
+  height: 3rem;
   background-color: var(--color-rose-600);
   color: white;
   border-radius: 50%;
@@ -25,10 +25,12 @@
 /* ===== Chat window ===== */
 .chatWindow {
   position: fixed;
-  bottom: 6rem;
-  right: 1.5rem;
-  width: 20rem;
-  height: 500px;
+  bottom: 5rem;
+  right: 1rem;
+  left: 1rem;
+  width: auto;
+  height: calc(100dvh - 7rem);
+  max-height: 500px;
   background-color: var(--color-bg-secondary);
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-2xl);
@@ -41,8 +43,19 @@
 }
 
 @media (min-width: 640px) {
+  .trigger {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
   .chatWindow {
+    left: auto;
+    right: 1.5rem;
     width: 24rem;
+    bottom: 6rem;
+    height: 500px;
   }
 }
 
