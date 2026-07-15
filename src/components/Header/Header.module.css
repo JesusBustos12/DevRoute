@@ -16,11 +16,14 @@
 .headerInner {
   max-width: 95rem;
   margin: 0 auto;
-  padding: 2.8rem;
-  height: 4rem;
+  padding: 1rem 1.5rem;
+  height: auto;
+  min-height: 4rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 
@@ -57,8 +60,8 @@
   border: 1px solid rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease;
   width: 100%;
-  max-width: 30rem;
-  margin-left: 40rem;
+  max-width: 100%;
+  order: 3;
 }
 
 [data-theme="dark"] .searchGroup {
@@ -90,4 +93,19 @@
 .searchInput::placeholder {
   color: var(--color-text-secondary);
   opacity: 0.6;
+}
+
+/* ===== Responsive Desktop ===== */
+@media (min-width: 768px) {
+  .headerInner {
+    padding: 1.5rem 2.8rem;
+    flex-wrap: nowrap;
+    height: 4rem;
+  }
+
+  .searchGroup {
+    max-width: 30rem;
+    order: unset;
+    margin: 0 2rem;
+  }
 }
