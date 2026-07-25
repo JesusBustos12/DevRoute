@@ -101,11 +101,12 @@
     padding: 1.5rem 2.8rem;
     flex-wrap: nowrap;
     height: 4rem;
+    justify-content: flex-start;
   }
 
   .searchGroup {
     max-width: 30rem;
     order: unset;
-    margin: 0 2rem;
+    margin: 0 1.5rem 0 auto;
   }
 }
